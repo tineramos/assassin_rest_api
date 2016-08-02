@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Weapons extends Model
+class Weapon extends Model
 {
     protected $table = 'weapons';
     protected $primaryKey = 'weapon_id';
@@ -16,4 +16,13 @@ class Weapons extends Model
     // public function game_details() {
     //     return $this->hasOne('App\GameInfo');
     // }
+
+    /**
+     * Get the players using the weapon
+     *
+     **/
+     public function players()
+     {
+         return $this->belongsToMany('App\Players');
+     }
 }

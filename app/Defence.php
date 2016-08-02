@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Defences extends Model
+class Defence extends Model
 {
     protected $table = 'defences';
     protected $primaryKey = 'defence_id';
@@ -16,4 +16,13 @@ class Defences extends Model
     // public function game_details() {
     //     return $this->hasOne('App\GameInfo');
     // }
+
+    /**
+     * Get the players using the defence
+     *
+     **/
+     public function players()
+     {
+         return $this->belongsToMany('App\Players');
+     }
 }

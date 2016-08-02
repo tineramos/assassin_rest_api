@@ -30,8 +30,8 @@ class Profile extends Model
     /**
      * Get the stats for the user.
      */
-     public function stats()
-     {
-         return $this->hasMany('App\Player');
-     }
+    //  public function stats()
+    //  {
+    //      return $this->hasMany('App\Player');
+    //  }
 }

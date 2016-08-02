@@ -24,10 +24,10 @@ class Player extends Model
      * Get the profile of the player
      *
      **/
-     public function user_profile()
-     {
-         return $this->belongsTo('App\Profile');
-     }
+    //  public function user_profile()
+    //  {
+    //      return $this->belongsTo('App\Profile');
+    //  }
 
      /**
       * Get the game_info of the of specific game
@@ -37,4 +37,31 @@ class Player extends Model
       {
           return $this->belongsTo('App\GameInfo');
       }
+
+      /**
+       * Get the game_info of the of specific game
+       *
+       **/
+       public function game()
+       {
+           return $this->belongsTo('App\Game');
+       }
+
+       /**
+        * Get all weapons
+        *
+        **/
+       public function weapons()
+       {
+           return $this->hasMany('App\Weapons');
+       }
+
+       /**
+        * Get all defences
+        *
+        **/
+       public function defences()
+       {
+           return $this->hasMany('App\Defences');
+       }
 }

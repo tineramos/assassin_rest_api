@@ -28,7 +28,7 @@ class GameController extends Controller
 
     }
 
-    public function joinGame(Request $request)
+    public function leaveGame(Request $request)
     {
 
     }
