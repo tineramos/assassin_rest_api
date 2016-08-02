@@ -14,13 +14,18 @@ class User extends Model implements
 {
     use Authenticatable, Authorizable;
 
+    protected $table = 'users';
+    protected $primaryKey = 'user_id';
+
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'email', 'code_name', 'course', 'age', 'height', 'gender'
     ];
 
     /**
@@ -31,4 +36,10 @@ class User extends Model implements
     protected $hidden = [
         'password',
     ];
+
+    // define relationship
+    // first argument passed to the hasOne method is the name of the related model
+    public function user_profile() {
+        return $this->hasOne('App\Profile');
+    }
 }
