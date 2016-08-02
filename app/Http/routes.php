@@ -17,24 +17,40 @@ $app->get('/', function () use ($app) {
 
 $app->group(['prefix' => 'api/v1/assassin/', 'namespace' => 'App\Http\Controllers'], function($app) {
 
-
-/*
-  Registration
-*/
+     /*
+       Registration
+     */
      $app->get('user/{user_id}', 'UserController@getUser');
-     $app->post('user/', 'UserController@createUser');
+     $app->post('user', 'UserController@createUser');
      $app->put('user/{user_id}', 'UserController@updateUser');
      $app->delete('user/{user_id}', 'UserController@deleteUser');
 
-/*
-  Games
-*/
+     /*
+       User Profile
+     */
+     $app->get('profile/{user_id}', 'ProfileController@getProfile');
+
+     /*
+       Games
+     */
      $app->get('games', 'GameController@index');
      $app->get('games/{game_id}', 'GameController@getGame');
+     $app->post('game/join', 'GameController@joinGame');
+     $app->post('game/leave', 'GameController@leaveGame');
 
-/*
-  Game Info
-*/
+     /*
+       Game Info
+     */
      $app->get('gameinfo/{game_id}', 'GameInfoController@getGameInfo');
+
+     /*
+       All Weapons
+     */
+     $app->get('weapons', 'WeaponsController@index');
+
+     /*
+       All Defences
+     */
+     $app->get('defences', 'DefencesController@index');
 
 });

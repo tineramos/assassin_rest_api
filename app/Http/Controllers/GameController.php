@@ -22,6 +22,17 @@ class GameController extends Controller
       $game = Game::find($game_id);
       return response()->json($game);
     }
+
+    public function joinGame(Request $request)
+    {
+
+    }
+
+    public function joinGame(Request $request)
+    {
+
+    }
+
 }
 
 ?>

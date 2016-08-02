@@ -24,7 +24,7 @@ class UserController extends Controller
       if (is_null($user)) {
         return response()->json(['success' => !is_null($user)]);
       }
-      return response()->json(['success' => !is_null($user), 'user_id' => $user->id]);
+      return response()->json(['success' => !is_null($user), 'user_id' => $user->user_id]);
 
     }
 
