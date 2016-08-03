@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model
 {
-    protected $fillable = ['game_id', 'games_won', 'total_games'];
+    protected $fillable = ['games_won', 'total_games'];
 
     protected $table = 'profile';
     protected $primaryKey = 'user_id';
+
+    public $timestamps = false;
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -30,8 +32,8 @@ class Profile extends Model
     /**
      * Get the stats for the user.
      */
-    //  public function stats()
-    //  {
-    //      return $this->hasMany('App\Player');
-    //  }
+     public function stats()
+     {
+         return $this->hasMany('App\Player');
+     }
 }

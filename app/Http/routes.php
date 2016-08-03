@@ -17,6 +17,8 @@ $app->get('/', function () use ($app) {
 
 $app->group(['prefix' => 'api/v1/assassin/', 'namespace' => 'App\Http\Controllers'], function($app) {
 
+    // TODO: uncomment routes that when implemented.
+
      /*
        Registration
      */
@@ -24,6 +26,12 @@ $app->group(['prefix' => 'api/v1/assassin/', 'namespace' => 'App\Http\Controller
      $app->post('user', 'UserController@createUser');
      $app->put('user/{user_id}', 'UserController@updateUser');
      $app->delete('user/{user_id}', 'UserController@deleteUser');
+
+     /*
+        Login and Logout
+     */
+
+     // TODO: add login/logout route here!!
 
      /*
        User Profile
@@ -36,12 +44,18 @@ $app->group(['prefix' => 'api/v1/assassin/', 'namespace' => 'App\Http\Controller
      $app->get('games', 'GameController@index');
      $app->get('games/{game_id}', 'GameController@getGame');
      $app->post('game/join', 'GameController@joinGame');
-     $app->post('game/leave', 'GameController@leaveGame');
+     $app->delete('game/leave/{player_id}', 'GameController@leaveGame');
 
      /*
-       Game Info
+        Player
      */
-     $app->get('gameinfo/{game_id}', 'GameInfoController@getGameInfo');
+     $app->put('player/changeWeapons/{player_id}', 'PlayerController@updateWeapons');
+     $app->put('player/changeDefences/{player_id}', 'PlayerController@updateDefences');
+
+     /*
+       Game Info: required params - game_id, optional - user_id
+     */
+     $app->get('gameplay/gameId/{game_id}/userId/{user_id}', 'GameInfoController@getGameInfo');
 
      /*
        All Weapons

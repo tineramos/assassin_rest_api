@@ -25,7 +25,6 @@ class UserController extends Controller
         return response()->json(['success' => !is_null($user)]);
       }
       return response()->json(['success' => !is_null($user), 'user_id' => $user->user_id]);
-
     }
 
     public function updateUser(Request $request, $user_id)
@@ -38,8 +37,6 @@ class UserController extends Controller
     public function deleteUser($user_id)
     {
       $user = User::find($user_id);
-      // $deleted = $deletedRows == 1;
-      // return response()->json(['deleted' => $deleted]);
       return $user->delete();
     }
 }

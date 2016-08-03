@@ -11,11 +11,7 @@ class Weapon extends Model
 
     protected $fillable = ['weapon_name'];
 
-    // define relationship
-    // first argument passed to the hasOne method is the name of the related model
-    // public function game_details() {
-    //     return $this->hasOne('App\GameInfo');
-    // }
+    public $timestamps = false;
 
     /**
      * Get the players using the weapon
@@ -23,6 +19,6 @@ class Weapon extends Model
      **/
      public function players()
      {
-         return $this->belongsToMany('App\Players');
+         return $this->belongsToMany('App\Player', 'player_weapons', 'weapon_id', 'player_id');
      }
 }

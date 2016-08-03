@@ -63,3 +63,25 @@ class WeaponsTableSeeder extends Seeder
              ));
            }
 }
+
+ /**
+  * Games Database Seeder
+  */
+ // class GamesTableSeeder extends Seeder
+ // {
+ //     public function run()
+ //     {
+ //         DB::table('games')->delete();
+ //
+ //         DB::table->('games')->insert(array(
+ //             array('game_id'=> '1',
+ //                    'game_title' => 'Sample Game',
+ //                    'game_status' => '1',
+ //                    'max_players' => '2',
+ //                    'players_joined' => '0',
+ //                    'available_slots' => '2',
+ //                    'open_until' => '2016-08-03 00:0:00',
+ //                    'winner_user_id' => null),
+ //         ))
+ //     }
+ // }

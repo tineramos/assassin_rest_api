@@ -14,7 +14,7 @@ class ProfileController extends Controller
     public function getProfile($user_id)
     {
       $profile = Profile::find($user_id);
-      return response()->json($game_info);
+      return response()->json($profile);
     }
 }
 

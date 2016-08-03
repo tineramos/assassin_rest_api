@@ -11,11 +11,13 @@ class GameInfo extends Model
     protected $table = 'game_info';
     protected $primaryKey = 'game_id';
 
+    public $timestamps = false;
+    
     /**
      * Get the game of the game_info
      *
      **/
-     public function user()
+     public function game()
      {
          return $this->belongsTo('App\Game');
      }
