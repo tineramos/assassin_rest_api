@@ -6,13 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Game extends Model
 {
-    protected $fillable = ['game_title', 'game_status', 'max_players',
-                           'players_joined', 'available_slots', 'open_until'];
+    public $timestamps = false;
 
     protected $table = 'games';
     protected $primaryKey = 'game_id';
 
-    public $timestamps = false;
+    protected $fillable = ['game_title', 'game_status', 'max_players', 'open_until'];
+
+    protected $guarded = ['players_joined', 'available_slots'];
 
     // define relationship
     // first argument passed to the hasOne method is the name of the related model

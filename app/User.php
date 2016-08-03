@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Hash;
 use Illuminate\Auth\Authenticatable;
 use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\Model;
@@ -25,7 +26,7 @@ class User extends Model implements
      * @var array
      */
     protected $fillable = [
-        'email', 'code_name', 'course', 'age', 'height', 'gender'
+        'email', 'code_name', 'course', 'age', 'height', 'gender', 'password'
     ];
 
     /**
@@ -33,9 +34,14 @@ class User extends Model implements
      *
      * @var array
      */
-    protected $hidden = [
-        'password',
-    ];
+     protected $hidden = [
+         'password',
+     ];
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
+    }
 
     // define relationship
     // first argument passed to the hasOne method is the name of the related model

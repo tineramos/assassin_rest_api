@@ -19,25 +19,30 @@ class GameController extends Controller
 {
     public function index()
     {
-      $games = Game::all();
-      return response()->json($games);
+        $games = Game::all();
+        return response()->json($games);
     }
 
     public function getGame($game_id)
     {
-      $game = Game::find($game_id);
-      return response()->json($game);
+        $game = Game::find($game_id);
+        return response()->json($game);
     }
 
     public function joinGame(Request $request)
     {
         $game_id = $request->input('game_id');
-        $user_id = $request->input('user_id');
 
         // get the corresponding gameplay object
         // if Game object exists with the id but not GameInfo, create new GameInfo instance
         $gameInfo = GameInfo::find($game_id);
         $game = Game::find($game_id);
+        $game->increment('players_joined');
+        $game->decrement('available_slots');
+        $game->save();
+
+        $user_id = $request->input('user_id');
+
         if (is_null($gameInfo) && !is_null($game)) {
             $gameInfo = new GameInfo;
             $gameInfo->game()->associate($game);
@@ -82,7 +87,7 @@ class GameController extends Controller
         }
 
         if (is_null($player)) {
-          return response()->json(['success' => !is_null($player)]);
+            return response()->json(['success' => !is_null($player)]);
         }
 
         return response()->json(['success' => !is_null($player), 'player_id' => $player->player_id]);
@@ -91,8 +96,6 @@ class GameController extends Controller
     public function leaveGame($player_id)
     {
         $player = Player::find($player_id);
-        // $player->weapons()->detach($player_id);
-        // $player->defences()->detach($player_id);
 
         foreach (Weapon::all() as $weapon) {
             $weapon->players()->detach($player_id);
@@ -101,6 +104,10 @@ class GameController extends Controller
         foreach (Defence::all() as $defence) {
             $defence->players()->detach($player_id);
         }
+
+        $game = $player->gameplay->game;
+        $game->increment('players_joined');
+        $game->decrement('available_slots');
 
         return response()->json(['success' => !is_null($player->delete())]);
     }
