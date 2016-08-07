@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Hash;
+// use Hash;
 use Illuminate\Auth\Authenticatable;
 use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\Model;
@@ -38,10 +38,10 @@ class User extends Model implements
          'password',
      ];
 
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = Hash::make($value);
-    }
+    // public function setPasswordAttribute($value)
+    // {
+    //     $this->attributes['password'] = \Hash::make($value);
+    // }
 
     // define relationship
     // first argument passed to the hasOne method is the name of the related model
