@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Hash;
 use Illuminate\Auth\Authenticatable;
 use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\Model;
@@ -14,13 +15,18 @@ class User extends Model implements
 {
     use Authenticatable, Authorizable;
 
+    protected $table = 'users';
+    protected $primaryKey = 'user_id';
+
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'email', 'code_name', 'course', 'age', 'height', 'gender', 'password'
     ];
 
     /**
@@ -28,7 +34,18 @@ class User extends Model implements
      *
      * @var array
      */
-    protected $hidden = [
-        'password',
-    ];
+     protected $hidden = [
+         'password',
+     ];
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
+    }
+
+    // define relationship
+    // first argument passed to the hasOne method is the name of the related model
+    public function user_profile() {
+        return $this->hasOne('App\Profile');
+    }
 }
