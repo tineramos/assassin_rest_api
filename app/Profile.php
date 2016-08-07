@@ -23,7 +23,7 @@ class Profile extends Model
     /**
      * Get the user of the profile
      *
-     **/
+     */
      public function user()
      {
          return $this->belongsTo('App\User');
@@ -31,9 +31,11 @@ class Profile extends Model
 
     /**
      * Get the stats for the user.
+     *
      */
      public function stats()
      {
          return $this->hasMany('App\Player');
      }
+
 }

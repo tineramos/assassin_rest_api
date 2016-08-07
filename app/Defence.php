@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Defence extends Model
 {
+    public $timestamps = false;
+
     protected $table = 'defences';
     protected $primaryKey = 'defence_id';
 
     protected $fillable = ['defence_name'];
-
-    public $timestamps = false;
 
     /**
      * Get the players using the defence

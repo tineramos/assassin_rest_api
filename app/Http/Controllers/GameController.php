@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Game;
-use App\GameInfo;
 use App\Player;
-use App\Profile;
 use App\User;
+use App\Profile;
 use App\Weapon;
 use App\Defence;
 use App\Http\Controllers\Controller;
@@ -23,34 +22,34 @@ class GameController extends Controller
         return response()->json($games);
     }
 
-    public function getGame($game_id)
+    public function getGameInfo($game_id, $user_id)
     {
         $game = Game::find($game_id);
-        return response()->json($game);
+        $match = ['user_id' => $user_id, 'game_id' => $game_id];
+        $hasJoined = Player::where($match)->first();
+
+        $players = Player::where('game_id', $game_id)->get();
+
+        return response()->json(['game' => $game,
+                                 'players' => $players,
+                                 'joined' => !is_null($hasJoined)]);
     }
 
     public function joinGame(Request $request)
     {
         $game_id = $request->input('game_id');
 
-        // get the corresponding gameplay object
-        // if Game object exists with the id but not GameInfo, create new GameInfo instance
-        $gameInfo = GameInfo::find($game_id);
         $game = Game::find($game_id);
+
+        if (is_null($game)) {
+            // TODO: throw error - game not present in DB
+        }
+
         $game->increment('players_joined');
         $game->decrement('available_slots');
         $game->save();
 
         $user_id = $request->input('user_id');
-
-        if (is_null($gameInfo) && !is_null($game)) {
-            $gameInfo = new GameInfo;
-            $gameInfo->game()->associate($game);
-            $gameInfo->save();
-        }
-        else {
-            // TODO: throw error - game not present in DB
-        }
 
         // get the corresponding user_profile object
         // if User object exists with the id but not Profile, create new Profile instance
@@ -69,9 +68,6 @@ class GameController extends Controller
         $player->user_id = $user_id;
         $player->game_id = $game_id;
         $player->save();
-
-        // $player->profile()->associate($profile);
-        // $player->gameplay()->associate($gameInfo);
 
         // set weapons and defences for the player
         $weapons = $request->input('weapons');

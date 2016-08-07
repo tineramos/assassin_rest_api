@@ -15,12 +15,16 @@ class CreateTables extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('user_id');
             $table->string('email')->unique();
-            $table->string('code_name')->unique();
             $table->string('password');
+            
+            $table->string('code_name')->unique();
             $table->string('course');
+            $table->string('gender');
+
             $table->tinyInteger('age')->unsigned();
             $table->tinyInteger('height')->unsigned();
-            $table->string('gender');
+
+            $table->binary('profile_photo');
         });
 
         Schema::create('profile', function (Blueprint $table) {
@@ -29,33 +33,30 @@ class CreateTables extends Migration
                   ->references('user_id')
                   ->on('users');
 
-            $table->integer('games_won')->unsigned();
-            $table->integer('total_games')->unsigned();
+            $table->integer('games_won_count')->unsigned();
+            $table->integer('total_games_count')->unsigned();
         });
 
         Schema::create('games', function (Blueprint $table) {
             $table->increments('game_id');
+
             $table->string('game_title');
-            $table->tinyInteger('game_status')->unsigned();
+
+            $table->enum('game_status', array('open', 'ongoing', 'closed', 'finished', 'cancelled'))
+                  ->default('open');
+
             $table->tinyInteger('max_players')->unsigned();
             $table->tinyInteger('players_joined')->unsigned();
             $table->tinyInteger('available_slots')->unsigned();
+
             $table->dateTime('open_until');
-        });
-
-        Schema::create('game_info', function (Blueprint $table) {
-            $table->integer('game_id')->unsigned()->primary();
-            $table->foreign('game_id')
-                  ->references('game_id')
-                  ->on('games');
-
             $table->dateTime('date_started');
             $table->dateTime('date_finished');
 
-            $table->integer('winner_user_id')->unsigned()->nullable();
-            $table->foreign('winner_user_id')
-                  ->references('user_id')
-                  ->on('users');
+            $table->integer('winner')->unsigned()->nullable();
+            $table->foreign('winner')
+                  ->references('player_id')
+                  ->on('players');
         });
 
         Schema::create('players', function (Blueprint $table) {
@@ -71,13 +72,15 @@ class CreateTables extends Migration
                   ->references('game_id')
                   ->on('games');
 
-            $table->tinyInteger('total_number_kills')->unsigned();
-            $table->boolean('is_eliminated');
+            $table->integer('eliminated_by_player')->unsigned()->nullable()->references('player_id')->on('players');
+            $table->integer('target_id')()->unsigned()->nullable()->references('player_id')->on('players');
 
-            $table->integer('eliminated_by_user')->unsigned()->nullable();  // add nullable
-            $table->foreign('eliminated_by_user')
-                  ->references('user_id')
-                  ->on('users');
+            $table->boolean('is_eliminated')->default(false);
+            $table->tinyInteger('kills_count')->unsigned();
+
+            // initial health points - 100
+            $table->float('health_points')->default('100.0');
+            $table->timestamps();
         });
 
         Schema::create('weapons', function (Blueprint $table) {
@@ -90,7 +93,6 @@ class CreateTables extends Migration
             $table->string('defence_name');
         });
 
-
         Schema::create('player_weapons', function (Blueprint $table) {
             $table->integer('player_id')->unsigned();
             $table->foreign('player_id')
@@ -102,6 +104,8 @@ class CreateTables extends Migration
             $table->foreign('weapon_id')
                   ->references('weapon_id')
                   ->on('weapons');
+
+            $table->timestamps();
         });
 
         Schema::create('player_defences', function (Blueprint $table) {
@@ -115,6 +119,10 @@ class CreateTables extends Migration
             $table->foreign('defence_id')
                   ->references('defence_id')
                   ->on('defences');
+
+            $table->tinyInteger('quantity')->unsigned()->default(1);
+            $table->boolean('is_active')->default(false);
+            $table->timestamps();
         });
     }
 
@@ -128,7 +136,6 @@ class CreateTables extends Migration
         Schema::drop('users');
         Schema::drop('profile');
         Schema::drop('games');
-        Schema::drop('game_info');
         Schema::drop('players');
         Schema::drop('weapons');
         Schema::drop('defences');

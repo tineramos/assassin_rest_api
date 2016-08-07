@@ -13,6 +13,12 @@ use Illuminate\Http\Request;
  */
 class PlayerController extends Controller
 {
+    public function getPlayer($player_id)
+    {
+        $player = Player::find($player_id);
+        return response()->json($player);
+    }
+
     public function updateWeapons(Request $request, $player_id)
     {
         $player = Player::find($player_id);
