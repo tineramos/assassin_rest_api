@@ -25,7 +25,7 @@ class CreateTables extends Migration
             $table->tinyInteger('age')->unsigned();
             $table->tinyInteger('height')->unsigned();
 
-            $table->binary('profile_photo');
+            $table->binary('profile_photo')->nullable();
         });
 
         // DO NOT MODIFY //
@@ -64,11 +64,6 @@ class CreateTables extends Migration
             $table->foreign('winner_user_id')
                   ->references('user_id')
                   ->on('users');
-
-            $table->integer('winner_player_id')->unsigned()->nullable();
-            $table->foreign('winner_player_id')
-                  ->references('player_id')
-                  ->on('players');
         });
 
         // DO NOT MODIFY //
@@ -87,15 +82,16 @@ class CreateTables extends Migration
                   ->on('games')
                   ->onDelete('cascade');
 
-            $table->integer('target_id')->unsigned()->nullable()->references('player_id')->on('players');
-            $table->integer('assassin_id')->unsigned()->nullable()->references('player_id')->on('players');
-            $table->integer('eliminated_by_player')->unsigned()->nullable()->references('player_id')->on('players');
-
             $table->boolean('is_eliminated')->default(false);
             $table->tinyInteger('kills_count')->unsigned();
 
             // initial health points - 100
             $table->float('health_points')->default('100.0');
+
+            $table->integer('target_id')->unsigned()->nullable()->references('player_id')->on('players');
+            $table->integer('assassin_id')->unsigned()->nullable()->references('player_id')->on('players');
+            $table->integer('eliminated_by_player')->unsigned()->nullable()->references('player_id')->on('players');
+
             $table->timestamps();
         });
 

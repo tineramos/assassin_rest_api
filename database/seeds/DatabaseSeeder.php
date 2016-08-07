@@ -80,8 +80,8 @@ class UsersTableSeeder extends Seeder
             array('user_id' => '3','email' => 'dean@mail.com','code_name' => 'lunatic','password' => 'password3','course' => 'Computer Science','age' => '30','height' => '180','gender' => 'm'),
             array('user_id' => '4','email' => 'finnbalor@mail.com','code_name' => 'demon','password' => 'password4','course' => 'Architecure','age' => '35','height' => '170','gender' => 'm'),
             array('user_id' => '5','email' => 'ajstyles@mail.com','code_name' => 'phenomenal','password' => 'password5','course' => 'Computer Science','age' => '40','height' => '180','gender' => 'm'),
-            array('user_id' => '6','email' => 'deanwinchester@mail.com','code_name' => 'supernatural','password' => 'password6','course' => 'Computer Science','age' => '33','height' => '175','gender' => 'm')
-        );
+            array('user_id' => '6','email' => 'deanwinchester@mail.com','code_name' => 'supernatural','password' => 'password6','course' => 'Computer Science','age' => '33','height' => '175','gender' => 'm'),
+        ));
     }
 }
 
