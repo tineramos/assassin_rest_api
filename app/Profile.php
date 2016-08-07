@@ -28,6 +28,15 @@ class Profile extends Model
      {
          return $this->belongsTo('App\User');
      }
+    // 
+    // /**
+    //  * Get the stats for the user.
+    //  *
+    //  */
+    //  public function games()
+    //  {
+    //      return $this->hasMany('App\Games');
+    //  }
 
     /**
      * Get the stats for the user.
