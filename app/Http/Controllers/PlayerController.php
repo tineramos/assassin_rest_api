@@ -5,12 +5,10 @@ namespace App\Http\Controllers;
 use App\Player;
 use App\Weapon;
 use App\Defence;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-/**
- *  TODO: optimize pivot table updating
- */
 class PlayerController extends Controller
 {
     public function getPlayer($player_id)
@@ -58,6 +56,19 @@ class PlayerController extends Controller
         // TODO: handle failed updates
         return response()->json(['success' => true]);
     }
+
+    public function attack(Request $requestß)
+    {
+        $player_id = $request->input('player_id')
+        $target_id = $request->input('$target_id')
+        $game_id = $request->input('$game_id')
+        $weapon_id = $request->input('$weapon_id')
+        $damage = $request->input('damage')
+
+        $target = Player::find($target_id)
+
+    }
+
 }
 
 ?>

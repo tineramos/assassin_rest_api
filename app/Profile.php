@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model
 {
-    protected $fillable = ['games_won', 'total_games'];
+    public $timestamps = false;
+
+    protected $fillable = ['games_won_count', 'total_games_count'];
+
+    protected $guarded = ['user_id', 'average_kill_per_game'];
 
     protected $table = 'profile';
     protected $primaryKey = 'user_id';
-
-    public $timestamps = false;
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -28,7 +30,7 @@ class Profile extends Model
      {
          return $this->belongsTo('App\User');
      }
-    // 
+    //
     // /**
     //  * Get the stats for the user.
     //  *

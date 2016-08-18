@@ -6,11 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Player extends Model
 {
-    public $timestamps = false;
+    protected $fillable = ['eliminated_by_player', 'is_eliminated'];
 
-    protected $fillable = ['user_id', 'game_id'];
-
-    protected $guarded = ['eliminated_by_player', 'kills_count', 'is_eliminated'];
+    protected $guarded = ['user_id', 'game_id', 'kills_count'];
 
     protected $table = 'players';
     protected $primaryKey = 'player_id';

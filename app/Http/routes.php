@@ -39,6 +39,7 @@ $app->group(['prefix' => 'api/v1/assassin/', 'namespace' => 'App\Http\Controller
       User Profile
     */
      $app->get('profile/{user_id}', 'ProfileController@getProfile');
+     $app->get('profileWithGames/{user_id}', 'ProfileController@getProfileWithGames');
 
      /*
        Games

@@ -11,8 +11,8 @@ class Game extends Model
     protected $table = 'games';
     protected $primaryKey = 'game_id';
 
-    protected $fillable = ['game_title', 'game_status', 'max_players', 'open_until'];
-    protected $guarded = ['players_joined', 'available_slots', 'winner', 'date_started', 'date_finished'];
+    protected $fillable = ['game_title', 'game_location', 'game_status', 'max_players'];
+    protected $guarded = ['players_joined', 'available_slots', 'winner_user_id', 'open_until', 'date_started', 'date_finished'];
 
     /**
      * Get the stats for the user.
@@ -21,4 +21,10 @@ class Game extends Model
     {
         return $this->hasMany('App\Player');
     }
+
+    public function winner()
+    {
+        return $this->hasOne('App\Profile', 'user_id');
+    }
+
 }
