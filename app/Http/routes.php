@@ -67,6 +67,11 @@ $app->group(['prefix' => 'api/v1/assassin/', 'namespace' => 'App\Http\Controller
        Game Info: required params - game_id, user_id
      */
 
+     /*
+        Game play actions - attack/put up defence
+     */
+     $app->put('attack', 'GamePlayController@attack');
+     $app->put('defend', 'GamePlayController@defend');
 
      /*
        All Weapons

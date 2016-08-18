@@ -6,7 +6,9 @@ use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 
-
+/*
+    Acknowledgement: https://gist.github.com/krisanalfa/0407dd822f2888226f45
+*/
 
 class KeyGenerateCommand extends Command
 {
