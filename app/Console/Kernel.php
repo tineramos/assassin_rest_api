@@ -8,6 +8,11 @@ use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 
 use App\Game;
 
+/*
+    vendor:publish command
+    Acknowledgement: https://packagist.org/packages/basicit/lumen-vendor-publish
+*/
+
 class Kernel extends ConsoleKernel
 {
     /**
@@ -16,7 +21,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        'App\Console\Commands\KeyGenerateCommand',
+        'BasicIT\LumenVendorPublish\VendorPublishCommand'
     ];
 
     /**
@@ -77,7 +83,9 @@ class Kernel extends ConsoleKernel
             // push notification
             echo "trigger push notification here";
         })
-        ->when(function() )
+        ->when(function() {
+
+        })
         ->cron('* * * * * *'); // for now use Cron for manual-trigger scheduling
     }
 }

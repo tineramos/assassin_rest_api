@@ -19,6 +19,13 @@ $app->group(['prefix' => 'api/v1/assassin/', 'namespace' => 'App\Http\Controller
 
     // TODO: uncomment routes that when implemented.
 
+    /*
+        Generate Application Key
+    */
+    $app->get('/key', function() {
+        return str_random(32);
+    });
+
      /*
        Registration
      */
