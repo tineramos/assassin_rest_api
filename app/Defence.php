@@ -19,6 +19,8 @@ class Defence extends Model
      **/
      public function players()
      {
-         return $this->belongsToMany('App\Player', 'player_defences', 'defence_id', 'player_id');
+         return $this->belongsToMany('App\Player', 'player_defences', 'defence_id', 'player_id')
+                     ->withPivot('authorize_usage', 'in_use')
+                     ->withTimestamps();
      }
 }
