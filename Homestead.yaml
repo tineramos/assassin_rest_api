@@ -1,0 +1,42 @@
+---
+box: laravel/homestead
+ip: "192.168.10.10"
+memory: 2048
+cpus: 1
+hostname: assassin-rest-api
+name: assassin-rest-api
+provider: virtualbox
+mariadb: true
+
+authorize: ~/.ssh/id_rsa.pub
+
+keys:
+    - ~/.ssh/id_rsa
+
+folders:
+    - map: "/Users/tineramos/Developer/msc_project/assassin_rest_api"
+      to: "/home/vagrant/assassin-rest-api"
+      type: "nfs"
+
+sites:
+    - map: assassin.app
+      to: "/home/vagrant/assassin-rest-api/public"
+      hhvm: true
+
+# networks:
+#     - type: "public_network"
+#       ip: "192.168.0.6"
+#       bridge: "en1: Wi-Fi (AirPort)"
+
+# blackfire:
+#     - id: foo
+#       token: bar
+#       client-id: foo
+#       client-token: bar
+
+# ports:
+#     - send: 50000
+#       to: 5000
+#     - send: 7777
+#       to: 777
+#       protocol: udp

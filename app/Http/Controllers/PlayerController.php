@@ -14,7 +14,7 @@ class PlayerController extends Controller
     public function getPlayer($player_id)
     {
         $player = Player::find($player_id);
-        return response()->json($player);
+        return response()->json($player, 200, [], JSON_NUMERIC_CHECK);
     }
 
     public function updateWeapons(Request $request, $player_id)

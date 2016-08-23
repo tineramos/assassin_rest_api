@@ -14,6 +14,8 @@ class Game extends Model
     protected $fillable = ['game_title', 'game_location', 'game_status', 'max_players'];
     protected $guarded = ['players_joined', 'available_slots', 'winner_user_id', 'open_until', 'date_started', 'date_finished'];
 
+    protected $hidden = ['created_at', 'updated_at'];
+
     /**
      * Get the stats for the user.
      */

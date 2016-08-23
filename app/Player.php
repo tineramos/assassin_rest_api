@@ -6,10 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Player extends Model
 {
-    protected $fillable = ['eliminated_by_player', 'is_eliminated'];
-
-    protected $guarded = ['user_id', 'game_id', 'kills_count'];
-
     protected $table = 'players';
     protected $primaryKey = 'player_id';
 
@@ -20,13 +16,17 @@ class Player extends Model
     */
     protected $appends = ['player_code_name'];
 
+    protected $fillable = ['eliminated_by_player', 'is_eliminated'];
+
+    protected $guarded = ['user_id', 'game_id', 'kills_count'];
+
    /**
     * The attributes excluded from the model's JSON form.
     *
     * @var array
     */
     protected $hidden = [
-        'user_id', 'game_id', 'profile'
+        'user_id', 'game_id', 'profile', 'created_at', 'updated_at'
     ];
 
    /**

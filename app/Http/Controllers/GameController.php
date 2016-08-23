@@ -19,7 +19,7 @@ class GameController extends Controller
     public function index()
     {
         $games = Game::all();
-        return response()->json($games);
+        return response()->json($games, 200, [], JSON_NUMERIC_CHECK);
     }
 
     public function getGameInfo($game_id, $user_id)
@@ -32,7 +32,8 @@ class GameController extends Controller
 
         return response()->json(['game' => $game,
                                  'players' => $players,
-                                 'joined' => !is_null($hasJoined)]);
+                                 'joined' => !is_null($hasJoined)],
+                                 200, [], JSON_NUMERIC_CHECK);
     }
 
     public function joinGame(Request $request)

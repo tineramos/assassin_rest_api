@@ -28,7 +28,8 @@ class ProfileController extends Controller
         // compute total and won games plus average kill per game
 
         return response()->json('profile' => $profile,
-                                'games' => $games);
+                                'games' => $games,
+                                200, [], JSON_NUMERIC_CHECK);
     }
 
 }
