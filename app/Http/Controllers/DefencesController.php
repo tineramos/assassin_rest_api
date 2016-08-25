@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Defence;
+use App\Model\Defence;
 use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
 
 /**

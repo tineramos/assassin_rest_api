@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Weapon;
-use Illuminate\Http\Request;
+use App\Model\Weapon;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Http\Request;
 
 use PushNotification;
 

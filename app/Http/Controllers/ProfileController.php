@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Profile;
-use App\Game;
+use App\Model\Profile;
+use App\Model\Game;
 use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
 
 /**

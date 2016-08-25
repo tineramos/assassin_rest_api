@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Player;
-use App\Weapon;
-use App\Defence;
-
+use App\Model\Player;
+use App\Model\Weapon;
+use App\Model\Defence;
 use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
 
 class PlayerController extends Controller

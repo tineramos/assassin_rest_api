@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Game;
-use App\Player;
-use App\User;
-use App\Profile;
-use App\Weapon;
-use App\Defence;
+use App\Model\Game;
+use App\Model\Player;
+use App\Model\User;
+use App\Model\Profile;
+use App\Model\Weapon;
+use App\Model\Defence;
 use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
 
 /**

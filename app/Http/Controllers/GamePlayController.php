@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Player;
-use App\Defence;
-
+use App\Model\Player;
+use App\Model\Defence;
 use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
 
 /**
@@ -26,7 +26,7 @@ class GamePlayController extends Controller
 
         // continue to process of player is attacking the right target
         if ($player->target_id == $target_id) {
-            
+
         }
         else {
             abort(405, 'Target not valid.');

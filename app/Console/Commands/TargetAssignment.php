@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Game;
-use App\Player;
+use App\Model\Game;
+use App\Model\Player;
 use App\Jobs\Job;
 use Illuminate\Console\Command;
 
