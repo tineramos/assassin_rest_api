@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\User;
 use App\Model\Player;
 use App\Model\Defence;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+
+use PushNotification;
 
 /**
  *
@@ -24,9 +27,11 @@ class GamePlayController extends Controller
         $player = Player::find($player_id);
         $target = Player::find($target_id);
 
-        // continue to process of player is attacking the right target
-        if ($player->target_id == $target_id) {
-
+        //continue to process - player is attacking the right target
+        if ($player->target_id == $target->player_id) {
+            $deviceToken = $target->getPlayerDeviceTokenAttribute();
+            $message = "You are being attacked.";
+            $this->sendNotificationToDevice($deviceToken, $message);
         }
         else {
             abort(405, 'Target not valid.');
@@ -51,6 +56,16 @@ class GamePlayController extends Controller
         }
 
         abort(406, 'Defence can not be used.');
+
+    }
+
+    public function sendNotificationToDevice($deviceToken, $message) {
+
+        $pushNotif = PushNotification::app(['environment' => 'development',
+                                            'certificate' => base_path('confirm.pem'),
+                                            'passPhrase'  => '',
+                                            'service'     => 'apns']);
+        $pushNotif->to($deviceToken)->send($message);
 
     }
 

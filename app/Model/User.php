@@ -29,7 +29,7 @@ class User extends Model implements
         'email', 'code_name', 'course', 'age', 'height', 'gender', 'profile_photo', 'password', 'device_token'
     ];
 
-    protected $guarded = ['user_id', ];
+    protected $guarded = ['user_id'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -48,6 +48,6 @@ class User extends Model implements
     // define relationship
     // first argument passed to the hasOne method is the name of the related model
     public function user_profile() {
-        return $this->hasOne('App\Profile');
+        return $this->hasOne('App\Model\Profile');
     }
 }

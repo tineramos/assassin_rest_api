@@ -19,7 +19,7 @@ class Weapon extends Model
      **/
      public function players()
      {
-         return $this->belongsToMany('App\Player', 'player_weapons', 'weapon_id', 'player_id')
+         return $this->belongsToMany('App\Model\Player', 'player_weapons', 'weapon_id', 'player_id')
                      ->withPivot('shots_left', 'in_use')
                      ->withTimestamps();
      }

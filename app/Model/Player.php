@@ -39,13 +39,21 @@ class Player extends Model
         return $this->profile->user->code_name;
     }
 
+    /*
+        Get device token
+    */
+    public function getPlayerDeviceTokenAttribute()
+    {
+        return $this->profile->user->device_token;
+    }
+
     /**
     * Get user_profile of player
     *
     */
     public function profile()
     {
-        return $this->belongsTo('App\Profile', 'user_id');
+        return $this->belongsTo('App\Model\Profile', 'user_id');
     }
 
    /**
@@ -54,7 +62,7 @@ class Player extends Model
     */
     public function gameplay()
     {
-        return $this->belongsTo('App\Game', 'game_id');
+        return $this->belongsTo('App\Model\Game', 'game_id');
     }
 
    /**
@@ -63,7 +71,7 @@ class Player extends Model
     */
     public function target()
     {
-        return $this->hasOne('App\Player', 'target');
+        return $this->hasOne('App\Model\Player', 'target');
     }
 
    /**
@@ -72,7 +80,7 @@ class Player extends Model
     */
     public function assassin()
     {
-        return $this->belongsTo('App\Player', 'player_id');
+        return $this->belongsTo('App\Model\Player', 'player_id');
     }
 
    /**
@@ -81,7 +89,7 @@ class Player extends Model
     **/
     public function kills()
     {
-        return $this->hasMany('App\Player', 'player_id');
+        return $this->hasMany('App\Model\Player', 'player_id');
     }
 
    /**
@@ -90,7 +98,7 @@ class Player extends Model
     **/
     public function weapons()
     {
-        return $this->hasMany('App\Weapon', 'player_weapons', 'player_id', 'weapon_id');
+        return $this->hasMany('App\Model\Weapon', 'player_weapons', 'player_id', 'weapon_id');
     }
 
    /**
@@ -99,6 +107,6 @@ class Player extends Model
     **/
     public function defences()
     {
-        return $this->hasMany('App\Defence', 'player_defences', 'player_id', 'defence_id');
+        return $this->hasMany('App\Model\Defence', 'player_defences', 'player_id', 'defence_id');
     }
 }

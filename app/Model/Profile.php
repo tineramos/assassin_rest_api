@@ -28,7 +28,7 @@ class Profile extends Model
      */
      public function user()
      {
-         return $this->belongsTo('App\User');
+         return $this->belongsTo('App\Model\User');
      }
     //
     // /**
@@ -46,7 +46,7 @@ class Profile extends Model
      */
      public function stats()
      {
-         return $this->hasMany('App\Player');
+         return $this->hasMany('App\Model\Player');
      }
 
 }

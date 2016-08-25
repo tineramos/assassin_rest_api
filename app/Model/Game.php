@@ -21,12 +21,12 @@ class Game extends Model
      */
     public function players()
     {
-        return $this->hasMany('App\Player');
+        return $this->hasMany('App\Model\Player');
     }
 
     public function winner()
     {
-        return $this->hasOne('App\Profile', 'user_id');
+        return $this->hasOne('App\Model\Profile', 'user_id');
     }
 
 }

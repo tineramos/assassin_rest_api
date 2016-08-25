@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 
-use App\Game;
+use App\Model\Game;
 
 /*
     vendor:publish command

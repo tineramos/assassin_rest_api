@@ -31,10 +31,17 @@ class GameController extends Controller
 
         $players = Player::where('game_id', $game_id)->get();
 
+        if (count($players) > 0) {
+            return response()->json(['game' => $game,
+                                     'players' => $players,
+                                     'joined' => !is_null($hasJoined)]
+                                     , 200, [], JSON_NUMERIC_CHECK);
+        }
+
         return response()->json(['game' => $game,
-                                 'players' => $players,
-                                 'joined' => !is_null($hasJoined)],
-                                 200, [], JSON_NUMERIC_CHECK);
+                                 'joined' => !is_null($hasJoined)]
+                                 , 200, [], JSON_NUMERIC_CHECK);
+
     }
 
     public function joinGame(Request $request)
