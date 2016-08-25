@@ -84,9 +84,11 @@ $app->singleton(
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
-class_alias('Aws\Laravel\AwsFacade', 'AWS');
+// class_alias('Aws\Laravel\AwsFacade', 'AWS');
+// $app->register(Aws\Laravel\AwsServiceProvider::class);
 
-$app->register(Aws\Laravel\AwsServiceProvider::class);
+$app->register(Davibennun\LaravelPushNotification\LaravelPushNotificationServiceProvider::class);
+class_alias('Davibennun\LaravelPushNotification\Facades\PushNotification', 'PushNotification');
 
 /*
 |--------------------------------------------------------------------------

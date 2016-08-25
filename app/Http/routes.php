@@ -83,4 +83,9 @@ $app->group(['prefix' => 'api/v1/assassin/', 'namespace' => 'App\Http\Controller
      */
      $app->get('defences', 'DefencesController@index');
 
+     /*
+        Notification
+     */
+     $app->get('notification', 'PushNotificationController@sendNotificationToDevice');
+
 });
