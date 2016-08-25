@@ -26,10 +26,10 @@ class User extends Model implements
      * @var array
      */
     protected $fillable = [
-        'email', 'code_name', 'course', 'age', 'height', 'gender', 'profile_photo'
+        'email', 'code_name', 'course', 'age', 'height', 'gender', 'profile_photo', 'password', 'device_token'
     ];
 
-    protected $guarded = ['user_id', 'password'];
+    protected $guarded = ['user_id', ];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -37,7 +37,7 @@ class User extends Model implements
      * @var array
      */
      protected $hidden = [
-         'password',
+         'password', 'device_token', 'profile_photo'
      ];
 
     // public function setPasswordAttribute($value)

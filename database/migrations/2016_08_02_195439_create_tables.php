@@ -26,6 +26,7 @@ class CreateTables extends Migration
             $table->tinyInteger('height')->unsigned();
 
             $table->binary('profile_photo')->nullable();
+            $table->string('device_token'); // ->unique();
         });
 
         // DO NOT MODIFY //

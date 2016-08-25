@@ -37,9 +37,7 @@ $app->group(['prefix' => 'api/v1/assassin/', 'namespace' => 'App\Http\Controller
      /*
         Login and Logout
      */
-
-    // TODO: add login/logout route here!!
-    //  $app->post('user/login', 'UserController@loginUser');
+     $app->post('user/login', 'UserController@loginUser');
     //  $app->post('user/logout', 'UserController@lgoutUser');
 
     /*

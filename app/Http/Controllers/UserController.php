@@ -40,20 +40,16 @@ class UserController extends Controller
         return $user->delete();
     }
 
+    // returns user's details if success
+    // else returns null
     public function loginUser(Request $request)
     {
         $code_name = $request->input('code_name');
         $password = $request->input('password');
 
         $match = ['code_name' => $code_name, 'password' => $password];
-        $has_user = User::where($match)->first();
-
-        if (!is_null($has_user)) {
-
-        }
-        else {
-
-        }
+        $user = User::where($match)->first();
+        return response()->json(['success' => $user], 200, [], JSON_NUMERIC_CHECK);
     }
 }
 
