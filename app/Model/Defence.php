@@ -13,6 +13,8 @@ class Defence extends Model
 
     protected $fillable = ['defence_name'];
 
+    protected $hidden = ['pivot'];
+
     /**
      * Get the players using the defence
      *

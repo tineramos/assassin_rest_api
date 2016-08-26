@@ -62,15 +62,14 @@ $app->group(['prefix' => 'api/v1/assassin/', 'namespace' => 'App\Http\Controller
      $app->put('player/changeDefences/{player_id}', 'PlayerController@updateDefences');
 
      /*
-       Game Info: required params - game_id, user_id
-     */
-
-     /*
         Game play actions - attack/put up defence
      */
      $app->get('target/userId/{user_id}/playerId/{player_id}', 'GamePlayController@getTarget');
-     $app->put('attack', 'GamePlayController@attack');
-     $app->put('defend', 'GamePlayController@defend');
+     $app->put('gameplay/attack', 'GamePlayController@attack');
+     $app->put('gameplay/defend', 'GamePlayController@defend');
+     $app->get('gameplay/getammo/{player_id}', 'GamePlayController@allAmmo');
+     $app->get('gameplay/getweapons/{player_id}', 'GamePlayController@getWeapons');
+     $app->get('gameplay/getdefences/{player_id}', 'GamePlayController@getDefences');
 
      /*
        All Weapons

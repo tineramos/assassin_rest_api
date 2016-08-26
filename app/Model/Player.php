@@ -109,7 +109,30 @@ class Player extends Model
     **/
     public function weapons()
     {
-        return $this->hasMany('App\Model\Weapon', 'player_weapons', 'player_id', 'weapon_id');
+        // return $this->hasMany('App\Model\Weapon', 'player_weapons', 'player_id', 'weapon_id');
+        return $this->belongsToMany('App\Model\Weapon', 'player_weapons')
+                    ->withPivot('shots_left', 'in_use');
+    }
+
+    public function formattedWeapons()
+    {
+        $format = array();
+        $weapon_list = $this->weapons;
+
+        foreach ($weapon_list as $weapon) {
+            $shots_left = $weapon->pivot->shots_left;
+            $in_use = $weapon->pivot->in_use;
+            // $format.append($in_use);
+            $sample = ['weapon_id' => $weapon->weapon_id,
+                       'weapon_name' => $weapon->weapon_name,
+                       'shots_left' => $shots_left,
+                       'in_use' => $in_use];
+
+            array_push($format, $sample);
+        }
+
+        return $format;
+
     }
 
    /**
@@ -118,6 +141,30 @@ class Player extends Model
     **/
     public function defences()
     {
-        return $this->hasMany('App\Model\Defence', 'player_defences', 'player_id', 'defence_id');
+        // return $this->hasMany('App\Model\Defence', 'player_defences', 'player_id', 'defence_id');
+        return $this->belongsToMany('App\Model\Defence', 'player_defences')
+                    ->withPivot('quantity', 'in_use');
     }
+
+    public function formattedDefences()
+    {
+        $format = array();
+        $defence_list = $this->defences;
+
+        foreach ($defence_list as $defence) {
+            $quantity = $defence->pivot->quantity;
+            $in_use = $defence->pivot->in_use;
+            // $format.append($in_use);
+            $sample = ['defence_id' => $defence->defence_id,
+                       'defence_name' => $defence->defence_name,
+                       'quantity' => $quantity,
+                       'in_use' => $in_use];
+
+            array_push($format, $sample);
+        }
+
+        return $format;
+
+    }
+
 }
