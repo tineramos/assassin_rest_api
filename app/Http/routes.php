@@ -17,7 +17,7 @@ $app->get('/', function () use ($app) {
 
 $app->group(['prefix' => 'api/v1/assassin/', 'namespace' => 'App\Http\Controllers'], function($app) {
 
-    // TODO: uncomment routes that when implemented.
+    // TODO: uncomment routes when implemented.
 
     /*
         Generate Application Key
@@ -68,6 +68,7 @@ $app->group(['prefix' => 'api/v1/assassin/', 'namespace' => 'App\Http\Controller
      /*
         Game play actions - attack/put up defence
      */
+     $app->get('target/userId/{user_id}/playerId/{player_id}', 'GamePlayController@getTarget');
      $app->put('attack', 'GamePlayController@attack');
      $app->put('defend', 'GamePlayController@defend');
 

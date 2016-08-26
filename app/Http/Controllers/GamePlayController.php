@@ -16,6 +16,24 @@ use PushNotification;
  */
 class GamePlayController extends Controller
 {
+
+    public function getTarget($user_id, $player_id)
+    {
+        $match = ['user_id' => $user_id, 'player_id' => $player_id];
+        $player = Player::where($match)->first();
+
+        if (!is_null($player)) {
+            // get the player entry of your target
+            $target = Player::find($player->target_id);
+
+            // get custom user details of the target from User table
+            return response()->json($target->targetDetails(), 200, [], JSON_NUMERIC_CHECK);
+        }
+        else {
+            return response()->json(['error' => 'Not a valid player.']);
+        }
+    }
+
     public function attack(Request $request)
     {
         $player_id = $request->input('player_id');

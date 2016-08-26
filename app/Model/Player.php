@@ -26,7 +26,7 @@ class Player extends Model
     * @var array
     */
     protected $hidden = [
-        'user_id', 'game_id', 'profile', 'created_at', 'updated_at'
+        'user_id', 'game_id', 'assassin_id', 'target_id', 'health_points', 'profile', 'created_at', 'updated_at'
     ];
 
    /**
@@ -45,6 +45,17 @@ class Player extends Model
     public function getPlayerDeviceTokenAttribute()
     {
         return $this->profile->user->device_token;
+    }
+
+    public function targetDetails()
+    {
+        $user = $this->profile->user;
+        return ['target_id' => $this->player_id,
+                'code_name' => $user->code_name,
+                'course' => $user->course,
+                'gender' => $user->gender,
+                'age' => $user->age,
+                'height' => $user->height];
     }
 
     /**
