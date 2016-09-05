@@ -41,6 +41,13 @@ class UserController extends Controller
         return $user->delete();
     }
 
+    public function sendDeviceToken($user_id, $device_token)
+    {
+        $user = User::find($user_id);
+        $user->device_token = $device_token;
+        $user->save();
+    }
+
     // returns user's details if success
     // else returns null
     public function loginUser(Request $request)
