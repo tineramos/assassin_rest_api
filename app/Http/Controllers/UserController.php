@@ -47,9 +47,16 @@ class UserController extends Controller
     {
         $code_name = $request->input('code_name');
         $password = $request->input('password');
+        $device_token = $request->input('device_token');
 
         $match = ['code_name' => $code_name, 'password' => $password];
         $user = User::where($match)->first();
+
+        if (!is_null($user)) {
+            $user->device_token = $device_token;
+            $user->save();
+        }
+
         return response()->json(['success' => $user], 200, [], JSON_NUMERIC_CHECK);
     }
 }

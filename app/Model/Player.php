@@ -122,7 +122,7 @@ class Player extends Model
         foreach ($weapon_list as $weapon) {
             $shots_left = $weapon->pivot->shots_left;
             $in_use = $weapon->pivot->in_use;
-            // $format.append($in_use);
+
             $sample = ['weapon_id' => $weapon->weapon_id,
                        'weapon_name' => $weapon->weapon_name,
                        'shots_left' => $shots_left,

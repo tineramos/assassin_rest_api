@@ -35,7 +35,6 @@ class GamePlayController extends Controller
         }
     }
 
-
     /*
      *  Get ammo (combined weapon/defence), separate weapon/defence API method
      */
@@ -62,11 +61,11 @@ class GamePlayController extends Controller
                     // 1 - weapon, 2 - defence, 3 - all
                     if ($mode == 1) {
                         return response()->json(["weapons" => $player->formattedWeapons()],
-                                                200, [], JSON_NUMERIC_CHECK);
+                                                 200, [], JSON_NUMERIC_CHECK);
                     }
                     else if ($mode == 2) {
                         return response()->json(["defences" => $player->formattedDefences()],
-                                                200, [], JSON_NUMERIC_CHECK);
+                                                 200, [], JSON_NUMERIC_CHECK);
                     }
                     else if ($mode == 3) {
                         return response()->json(["weapons" => $player->formattedWeapons(),
@@ -112,20 +111,116 @@ class GamePlayController extends Controller
         $weapon_id = $request->input('weapon_id');
         $damage = $request->input('damage');
 
-        $player = Player::find($player_id);
+        $assassin = Player::find($player_id);
         $target = Player::find($target_id);
 
         //continue to process - player is attacking the right target
-        if ($player->target_id == $target->player_id) {
-            $deviceToken = $target->getPlayerDeviceTokenAttribute();
+        if ($assassin->target_id == $target->player_id) {
+            $device_token = $target->getPlayerDeviceTokenAttribute();
+            $deviceTokenTwo = $assassin->getPlayerDeviceTokenAttribute();
             $message = "You are being attacked.";
-            $this->sendNotificationToDevice($deviceToken, $message);
+            // $this->sendNotificationToDevice($device_token, $message);
 
-            // TODO: check for damage logic
+            foreach ($assassin->weapons as $weapon) {
+                if ($weapon->weapon_id == $weapon_id) {
+                    $deduction = $this->weaponTrackerMatrix($weapon_id);
+                    $weapon->pivot->shots_left -= $deduction;
+                    // $weapon->pivot->save();
+                }
+            }
+
+            // check for defences
+            foreach ($target->defences as $defence) {
+
+                echo "success1";
+
+                if ($defence->pivot->in_use == true && $defence->pivot->quantity > 0) {
+                    $defence_id = $defence->defence_id;
+                    echo "success2";
+                    $messageToAssassin = "";
+
+                    // look up in matrix
+                    $damage_ratio = $this->lookUpAtMatrix($defence_id, $weapon_id);
+                    echo "damage_ratio" . $damage_ratio;
+                    if ($damage_ratio > 0) {
+
+                        $damage = $damage/$damage_ratio;
+
+                        echo "damage: " . $damage;
+
+                        $target->health_points -= $damage;
+                        $target->save();
+
+                        $message = $damage . " points deducted.";
+                        $messageToAssassin = "Attack successful.";
+
+                    }
+                    else {
+                        if ($damage_ratio == 0) {
+                            $message = "No damage sustained.";
+                            $messageToAssassin = "Attack not successful.";
+                        }
+                        else {
+                            $message = "No damage but defence was broken.";
+                            $messageToAssassin = "Attack not successful.";
+
+                            $defence->pivot->in_use = false;
+                            $defence->pivot->quantity--;
+                            $defence->pivot->authorize_usage = false;
+
+                        }
+
+                    $this->sendNotificationToDevice($deviceTokenTwo, $messageToAssassin);
+                    $this->sendNotificationToDevice($device_token, $message);
+
+                    break;
+                    }
+
+                }
+                else {
+                    echo "damage: " . $damage;
+
+                    $target->health_points -= $damage;
+                    $target->save();
+
+                    $message = $damage . " points deducted.";
+                    $messageToAssassin = "Attack successful.";
+
+                    $this->sendNotificationToDevice($deviceTokenTwo, $messageToAssassin);
+                    $this->sendNotificationToDevice($device_token, $message);
+                }
+
+            return response()->json(['success' => true]);
+
+            }
         }
         else {
             abort(405, 'Target not valid.');
         }
+    }
+
+    public function lookUpAtMatrix($defence_id, $weapon_id) {
+
+        // legend: 0 - no damage,
+        // 1 - full damage,
+        // 2 - half damage,
+        // -1 - no damage but one less defence
+        $damageMatrix = array(
+            array(0, 1, 2, -1, 0),
+            array(0, 1, 0, 1, 0),
+            array(1, 0, 1, 1, 1),
+            array(-1, -1, -1, -1, -1),
+            array(0, 0, 0, 0, 0),
+        );
+
+        return $damageMatrix[$defence_id][$weapon_id];
+
+    }
+
+    public function weaponTrackerMatrix($weapon_id) {
+
+        $shots_matrix = array(1, 1, 0, 1, 0);
+        return $shots_matrix[$weapon_id];
     }
 
     public function defend(Request $request)
@@ -149,13 +244,13 @@ class GamePlayController extends Controller
 
     }
 
-    public function sendNotificationToDevice($deviceToken, $message) {
+    public function sendNotificationToDevice($device_token, $message) {
 
         $pushNotif = PushNotification::app(['environment' => 'development',
                                             'certificate' => base_path('confirm.pem'),
                                             'passPhrase'  => '',
                                             'service'     => 'apns']);
-        $pushNotif->to($deviceToken)->send($message);
+        $pushNotif->to($device_token)->send($message);
 
     }
 

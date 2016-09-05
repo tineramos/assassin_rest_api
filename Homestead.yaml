@@ -6,7 +6,7 @@ cpus: 1
 hostname: assassin-rest-api
 name: assassin-rest-api
 provider: virtualbox
-mariadb: true
+# mariadb: true
 
 authorize: ~/.ssh/id_rsa.pub
 
