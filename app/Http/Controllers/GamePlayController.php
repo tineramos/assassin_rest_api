@@ -119,6 +119,11 @@ class GamePlayController extends Controller
             $device_token = $target->getPlayerDeviceTokenAttribute();
             $deviceTokenTwo = $assassin->getPlayerDeviceTokenAttribute();
             $message = "You are being attacked.";
+
+            // echo "target: " . $target;
+            // echo "one: " . $device_token;
+            // echo "two: " . $deviceTokenTwo;
+
             // $this->sendNotificationToDevice($device_token, $message);
 
             foreach ($assassin->weapons as $weapon) {
@@ -132,21 +137,18 @@ class GamePlayController extends Controller
             // check for defences
             foreach ($target->defences as $defence) {
 
-                echo "success1";
-
                 if ($defence->pivot->in_use == true && $defence->pivot->quantity > 0) {
                     $defence_id = $defence->defence_id;
-                    echo "success2";
                     $messageToAssassin = "";
 
                     // look up in matrix
                     $damage_ratio = $this->lookUpAtMatrix($defence_id, $weapon_id);
-                    echo "damage_ratio" . $damage_ratio;
+                    // echo "damage_ratio" . $damage_ratio;
                     if ($damage_ratio > 0) {
 
                         $damage = $damage/$damage_ratio;
 
-                        echo "damage: " . $damage;
+                        // echo "damage: " . $damage;
 
                         $target->health_points -= $damage;
                         $target->save();
@@ -178,7 +180,7 @@ class GamePlayController extends Controller
 
                 }
                 else {
-                    echo "damage: " . $damage;
+                    // echo "damage: " . $damage;
 
                     $target->health_points -= $damage;
                     $target->save();
